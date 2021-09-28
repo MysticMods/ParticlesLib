@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[36,]"
+issueTrackerURL="https://github.com/noobanidus/particleslib/issues"
+license="MIT"
+
+[[mods]]
+modId="particleslib"
+version="${version}"
+displayName="${modName}"
+displayURL="${modHomepage}"
+credits="${modCredits}"
+authors="${modAuthor}"
+description='''
+${modDescription}
+'''
+
+[[dependencies.particleslib]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36,]"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.particleslib]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5]"
+    ordering="NONE"
+    side="BOTH"
