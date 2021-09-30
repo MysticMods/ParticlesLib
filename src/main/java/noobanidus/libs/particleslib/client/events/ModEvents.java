@@ -18,11 +18,10 @@ public class ModEvents {
     manager.register(ModParticles.CLOUD_PARTICLE.get(), CloudParticleType.Factory::new);
     manager.register(ModParticles.FIRE_PARTICLE.get(), FireParticleType.Factory::new);
     manager.register(ModParticles.GLOW_PARTICLE.get(), GlowParticleType.Factory::new);
-    manager.register(ModParticles.GLITTER_PARTICLE.get(), GlitterParticleType.Factory::new);
     manager.register(ModParticles.LEAF_PARTICLE.get(), LeafParticleType.Factory::new);
     manager.register(ModParticles.LEAF_ARC_PARTICLE.get(), LeafArcParticleType.Factory::new);
     manager.register(ModParticles.SMOKE_PARTICLE.get(), SmokeParticleType.Factory::new);
-    manager.register(ModParticles.SPARK_PARTICLE.get(), SparkParticleType.Factory::new);
+    manager.register(ModParticles.SPARKLE_PARTICLE.get(), SparkleParticleType.Factory::new);
 /*    Minecraft.getInstance().particleEngine.register(FLAME_PARTICLE.get(), FlameParticleType.Factory::new);
     Minecraft.getInstance().particleEngine.register(SMOKE_PARTICLE.get(), SmokeParticleType.Factory::new);
     Minecraft.getInstance().particleEngine.register(SPARKLE_PARTICLE.get(), SparkleParticleType.Factory::new);

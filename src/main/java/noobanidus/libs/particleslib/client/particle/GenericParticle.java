@@ -65,7 +65,24 @@ public class GenericParticle extends SpriteTexturedParticle {
   @Override
   public void tick() {
     updateTraits();
-    super.tick();
+    this.xo = this.x;
+    this.yo = this.y;
+    this.zo = this.z;
+    if (this.age++ >= this.lifetime) {
+      this.remove();
+    } else {
+      if (!this.data.gravity) {
+        this.yd -= 0.04D * (double) this.gravity;
+        this.move(this.xd, this.yd, this.zd);
+        this.xd *= 0.98F;
+        this.yd *= 0.98F;
+        this.zd *= 0.98F;
+        if (this.onGround) {
+          this.xd *= 0.7F;
+          this.zd *= 0.7F;
+        }
+      }
+    }
   }
 
   @Override

@@ -13,7 +13,7 @@ public class GenericParticleData implements IParticleData {
     public float scale1 = 1, scale2 = 0;
     public int lifetime = 20;
     public float spin = 0;
-    public boolean gravity = false;
+    public boolean gravity = true;
     public boolean additive = false;
 
     public static Codec<GenericParticleData> codecFor(ParticleType<?> type) {
