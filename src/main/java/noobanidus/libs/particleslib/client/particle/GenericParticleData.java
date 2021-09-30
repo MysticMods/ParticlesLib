@@ -9,11 +9,12 @@ import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
 
 public class GenericParticleData implements IParticleData {
-    float r1 = 1, g1 = 1, b1 = 1, a1 = 1, r2 = 1, g2 = 1, b2 = 1, a2 = 0;
-    float scale1 = 1, scale2 = 0;
-    int lifetime = 20;
-    float spin = 0;
-    boolean gravity = false;
+    public float r1 = 1, g1 = 1, b1 = 1, a1 = 1, r2 = 1, g2 = 1, b2 = 1, a2 = 0;
+    public float scale1 = 1, scale2 = 0;
+    public int lifetime = 20;
+    public float spin = 0;
+    public boolean gravity = false;
+    public boolean additive = false;
 
     public static Codec<GenericParticleData> codecFor(ParticleType<?> type) {
         return RecordCodecBuilder.create(instance -> instance.group(
@@ -29,9 +30,10 @@ public class GenericParticleData implements IParticleData {
             Codec.FLOAT.fieldOf("scale2").forGetter(d -> d.scale2),
             Codec.INT.fieldOf("lifetime").forGetter(d -> d.lifetime),
             Codec.FLOAT.fieldOf("spin").forGetter(d -> d.spin),
-            Codec.BOOL.fieldOf("gravity").forGetter(d -> d.gravity)
+            Codec.BOOL.fieldOf("gravity").forGetter(d -> d.gravity),
+            Codec.BOOL.fieldOf("additive").forGetter(d -> d.additive)
         ).apply(instance, (r1, g1, b1, a1, r2, g2, b2, a2, scale1, scale2,
-                           lifetime, spin, gravity) -> {
+                           lifetime, spin, gravity, additive) -> {
             GenericParticleData data = new GenericParticleData(type);
             data.r1 = r1; data.g1 = g1; data.b1 = b1; data.a1 = a1;
             data.r2 = r2; data.g2 = g2; data.b2 = b2; data.a2 = a2;
@@ -40,11 +42,12 @@ public class GenericParticleData implements IParticleData {
             data.lifetime = lifetime;
             data.spin = spin;
             data.gravity = gravity;
+            data.additive = additive;
             return data;
         }));
     }
 
-    ParticleType<?> type;
+    private final ParticleType<?> type;
 
     public GenericParticleData(ParticleType<?> type) {
         this.type = type;
@@ -63,6 +66,7 @@ public class GenericParticleData implements IParticleData {
         buffer.writeInt(lifetime);
         buffer.writeFloat(spin);
         buffer.writeBoolean(gravity);
+        buffer.writeBoolean(additive);
     }
 
     @Override
@@ -99,6 +103,8 @@ public class GenericParticleData implements IParticleData {
             float spin = reader.readFloat();
             reader.expect(' ');
             boolean gravity = reader.readBoolean();
+            reader.expect(' ');
+            boolean additive = reader.readBoolean();
             GenericParticleData data = new GenericParticleData(type);
             data.r1 = r1;
             data.g1 = g1;
@@ -113,6 +119,7 @@ public class GenericParticleData implements IParticleData {
             data.lifetime = lifetime;
             data.spin = spin;
             data.gravity = gravity;
+            data.additive = additive;
             return data;
         }
 
@@ -131,6 +138,7 @@ public class GenericParticleData implements IParticleData {
             int lifetime = buf.readInt();
             float spin = buf.readFloat();
             boolean gravity = buf.readBoolean();
+            boolean additive = buf.readBoolean();
             GenericParticleData data = new GenericParticleData(type);
             data.r1 = r1;
             data.g1 = g1;
@@ -145,6 +153,7 @@ public class GenericParticleData implements IParticleData {
             data.lifetime = lifetime;
             data.spin = spin;
             data.gravity = gravity;
+            data.additive = additive;
             return data;
         }
     };

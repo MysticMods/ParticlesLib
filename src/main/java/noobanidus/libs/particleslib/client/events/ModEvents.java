@@ -7,8 +7,7 @@ import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import noobanidus.libs.particleslib.ParticlesLib;
-import noobanidus.libs.particleslib.client.particle.type.CloudParticleType;
-import noobanidus.libs.particleslib.client.particle.type.FireParticleType;
+import noobanidus.libs.particleslib.client.particle.type.*;
 import noobanidus.libs.particleslib.init.ModParticles;
 
 @Mod.EventBusSubscriber(modid = ParticlesLib.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -18,6 +17,12 @@ public class ModEvents {
     ParticleManager manager = Minecraft.getInstance().particleEngine;
     manager.register(ModParticles.CLOUD_PARTICLE.get(), CloudParticleType.Factory::new);
     manager.register(ModParticles.FIRE_PARTICLE.get(), FireParticleType.Factory::new);
+    manager.register(ModParticles.GLOW_PARTICLE.get(), GlowParticleType.Factory::new);
+    manager.register(ModParticles.GLITTER_PARTICLE.get(), GlitterParticleType.Factory::new);
+    manager.register(ModParticles.LEAF_PARTICLE.get(), LeafParticleType.Factory::new);
+    manager.register(ModParticles.LEAF_ARC_PARTICLE.get(), LeafArcParticleType.Factory::new);
+    manager.register(ModParticles.SMOKE_PARTICLE.get(), SmokeParticleType.Factory::new);
+    manager.register(ModParticles.SPARK_PARTICLE.get(), SparkParticleType.Factory::new);
 /*    Minecraft.getInstance().particleEngine.register(FLAME_PARTICLE.get(), FlameParticleType.Factory::new);
     Minecraft.getInstance().particleEngine.register(SMOKE_PARTICLE.get(), SmokeParticleType.Factory::new);
     Minecraft.getInstance().particleEngine.register(SPARKLE_PARTICLE.get(), SparkleParticleType.Factory::new);
