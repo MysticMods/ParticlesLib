@@ -18,18 +18,16 @@ public class ModEvents {
     manager.register(ModParticles.CLOUD_PARTICLE.get(), CloudParticleType.Factory::new);
     manager.register(ModParticles.FIRE_PARTICLE.get(), FireParticleType.Factory::new);
     manager.register(ModParticles.GLOW_PARTICLE.get(), GlowParticleType.Factory::new);
-    manager.register(ModParticles.LEAF_PARTICLE.get(), LeafParticleType.Factory::new);
     manager.register(ModParticles.LEAF_ARC_PARTICLE.get(), LeafArcParticleType.Factory::new);
     manager.register(ModParticles.LEAF_DIRECTED_PARTICLE.get(), LeafDirectedParticleType.Factory::new);
+    manager.register(ModParticles.LEAF_PARTICLE.get(), LeafParticleType.Factory::new);
+    manager.register(ModParticles.PETAL_PARTICLE.get(), PetalParticleType.Factory::new);
+    manager.register(ModParticles.RING_PARTICLE.get(), RingParticleType.Factory::new);
+    manager.register(ModParticles.RING_PARTICLE.get(), RingParticleType.Factory::new);
     manager.register(ModParticles.SMOKE_PARTICLE.get(), SmokeParticleType.Factory::new);
     manager.register(ModParticles.SPARKLE_PARTICLE.get(), SparkleParticleType.Factory::new);
-/*    Minecraft.getInstance().particleEngine.register(FLAME_PARTICLE.get(), FlameParticleType.Factory::new);
-    Minecraft.getInstance().particleEngine.register(SMOKE_PARTICLE.get(), SmokeParticleType.Factory::new);
-    Minecraft.getInstance().particleEngine.register(SPARKLE_PARTICLE.get(), SparkleParticleType.Factory::new);
-    Minecraft.getInstance().particleEngine.register(WISP_PARTICLE.get(), WispParticleType.Factory::new);
-    Minecraft.getInstance().particleEngine.register(BUBBLE_PARTICLE.get(), BubbleParticleType.Factory::new);
-    Minecraft.getInstance().particleEngine.register(STEAM_PARTICLE.get(), SteamParticleType.Factory::new);
-    Minecraft.getInstance().particleEngine.register(LINE_WISP_PARTICLE.get(), LineWispParticleType.Factory::new);*/
+    manager.register(ModParticles.STAR_PARTICLE.get(), StarParticleType.Factory::new);
+    manager.register(ModParticles.THORN_PARTICLE.get(), ThornParticleType.Factory::new);
   }
 }
 
