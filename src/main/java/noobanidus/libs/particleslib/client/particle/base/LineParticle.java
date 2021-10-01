@@ -61,13 +61,9 @@ public class LineParticle extends SpriteTexturedParticle {
     setAlpha(MathHelper.lerp(coeff, data.a1, data.a2));
     oRoll = roll;
     roll += data.spin;
-  }
-
-  public double distance() {
-    double a = this.x - data.destination.x;
-    double b = this.y - data.destination.y;
-    double c = this.z - data.destination.z;
-    return (a * a + b * b + c * c);
+    x = MathHelper.lerp(coeff, data.origin.x, data.destination.x);
+    y = MathHelper.lerp(coeff, data.origin.y, data.destination.y);
+    z = MathHelper.lerp(coeff, data.origin.z, data.destination.z);
   }
 
   @Override
@@ -76,7 +72,7 @@ public class LineParticle extends SpriteTexturedParticle {
     this.xo = this.x;
     this.yo = this.y;
     this.zo = this.z;
-    if (this.age++ >= this.lifetime || distance() <= data.distance) {
+    if (this.age++ >= this.lifetime) {
       this.remove();
     } else {
       if (this.data.gravity) {

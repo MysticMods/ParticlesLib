@@ -7,6 +7,7 @@ import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import noobanidus.libs.particleslib.ParticlesLib;
+import noobanidus.libs.particleslib.client.particle.LineGlowParticle;
 import noobanidus.libs.particleslib.client.particle.type.*;
 import noobanidus.libs.particleslib.init.ModParticles;
 
@@ -28,6 +29,7 @@ public class ModEvents {
     manager.register(ModParticles.SPARKLE_PARTICLE.get(), SparkleParticleType.Factory::new);
     manager.register(ModParticles.STAR_PARTICLE.get(), StarParticleType.Factory::new);
     manager.register(ModParticles.THORN_PARTICLE.get(), ThornParticleType.Factory::new);
+    manager.register(ModParticles.LINE_GLOW_PARTICLE.get(), LineGlowParticleType.Factory::new);
   }
 }
 

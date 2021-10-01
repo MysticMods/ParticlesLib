@@ -3,6 +3,7 @@ package noobanidus.libs.particleslib.init;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.particles.ParticleType;
 import noobanidus.libs.particleslib.client.particle.LeafDirectedParticle;
+import noobanidus.libs.particleslib.client.particle.LineGlowParticle;
 import noobanidus.libs.particleslib.client.particle.PetalParticle;
 import noobanidus.libs.particleslib.client.particle.type.*;
 
@@ -16,6 +17,7 @@ public class ModParticles {
   public static RegistryEntry<LeafArcParticleType> LEAF_ARC_PARTICLE = REGISTRATE.simple("leaf_arc_particle", ParticleType.class, LeafArcParticleType::new);
   public static RegistryEntry<LeafDirectedParticleType> LEAF_DIRECTED_PARTICLE = REGISTRATE.simple("leaf_directed_particle", ParticleType.class, LeafDirectedParticleType::new);
   public static RegistryEntry<LeafParticleType> LEAF_PARTICLE = REGISTRATE.simple("leaf_particle", ParticleType.class, LeafParticleType::new);
+  public static RegistryEntry<LineGlowParticleType> LINE_GLOW_PARTICLE = REGISTRATE.simple("line_glow_particle", ParticleType.class, LineGlowParticleType::new);
   public static RegistryEntry<PetalParticleType> PETAL_PARTICLE = REGISTRATE.simple("petal_particle", ParticleType.class, PetalParticleType::new);
   public static RegistryEntry<RingParticleType> RING_PARTICLE = REGISTRATE.simple("ring_particle", ParticleType.class, RingParticleType::new);
   public static RegistryEntry<SmokeParticleType> SMOKE_PARTICLE = REGISTRATE.simple("smoke_particle", ParticleType.class, SmokeParticleType::new);
