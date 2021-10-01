@@ -59,6 +59,7 @@ public class GenericParticle extends SpriteTexturedParticle {
     float b = ColorHelper.PackedColor.blue(packed) / 255.0f;
     setColor(r, g, b);
     setAlpha(MathHelper.lerp(coeff, data.a1, data.a2));
+    // TODO: Init roll
     oRoll = roll;
     roll += data.spin;
   }

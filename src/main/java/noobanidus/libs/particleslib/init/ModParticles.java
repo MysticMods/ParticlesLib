@@ -17,6 +17,7 @@ public class ModParticles {
   public static RegistryEntry<LeafArcParticleType> LEAF_ARC_PARTICLE = REGISTRATE.simple("leaf_arc_particle", ParticleType.class, LeafArcParticleType::new);
   public static RegistryEntry<LeafDirectedParticleType> LEAF_DIRECTED_PARTICLE = REGISTRATE.simple("leaf_directed_particle", ParticleType.class, LeafDirectedParticleType::new);
   public static RegistryEntry<LeafParticleType> LEAF_PARTICLE = REGISTRATE.simple("leaf_particle", ParticleType.class, LeafParticleType::new);
+  public static RegistryEntry<LeafWhirlwindParticleType> LEAF_WHIRLWIND_PARTICLE = REGISTRATE.simple("leaf_whirlwind_particle", ParticleType.class, LeafWhirlwindParticleType::new);
   public static RegistryEntry<LineGlowParticleType> LINE_GLOW_PARTICLE = REGISTRATE.simple("line_glow_particle", ParticleType.class, LineGlowParticleType::new);
   public static RegistryEntry<PetalParticleType> PETAL_PARTICLE = REGISTRATE.simple("petal_particle", ParticleType.class, PetalParticleType::new);
   public static RegistryEntry<RingParticleType> RING_PARTICLE = REGISTRATE.simple("ring_particle", ParticleType.class, RingParticleType::new);

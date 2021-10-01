@@ -9,6 +9,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import noobanidus.libs.particleslib.client.particle.data.DirectedParticleData;
+import noobanidus.libs.particleslib.client.particle.data.WhirlwindParticleData;
 import noobanidus.libs.particleslib.client.particle.render.SpriteParticleRenderType;
 import noobanidus.libs.particleslib.client.render.DelayedRender;
 import noobanidus.libs.particleslib.client.util.RenderUtil;
@@ -16,18 +17,18 @@ import noobanidus.libs.particleslib.config.ConfigManager;
 
 import java.awt.*;
 
-public class LineParticle extends SpriteTexturedParticle {
-  public DirectedParticleData data;
+public class WhirlwindParticle extends SpriteTexturedParticle {
+  public WhirlwindParticleData data;
   public float[] hsv1 = new float[3];
   public float[] hsv2 = new float[3];
   private final IParticleRenderType renderer;
   private final RenderType type;
 
-  public LineParticle(ClientWorld world, DirectedParticleData data, double x, double y, double z, double vx, double vy, double vz) {
+  public WhirlwindParticle(ClientWorld world, WhirlwindParticleData data, double x, double y, double z, double vx, double vy, double vz) {
     this(world, data, x, y, z, vx, vy, vz, SpriteParticleRenderType.INSTANCE, RenderUtil.DELAYED_PARTICLE);
   }
 
-  protected LineParticle(ClientWorld world, DirectedParticleData data, double x, double y, double z, double vx, double vy, double vz, IParticleRenderType renderer, RenderType type) {
+  protected WhirlwindParticle(ClientWorld world, WhirlwindParticleData data, double x, double y, double z, double vx, double vy, double vz, IParticleRenderType renderer, RenderType type) {
     super(world, x, y, z, vx, vy, vz);
     this.type = type;
     this.renderer = renderer;
@@ -62,9 +63,6 @@ public class LineParticle extends SpriteTexturedParticle {
     setAlpha(MathHelper.lerp(coeff, data.a1, data.a2));
     oRoll = roll;
     roll += data.spin;
-    x = MathHelper.lerp(coeff, data.origin.x, data.destination.x);
-    y = MathHelper.lerp(coeff, data.origin.y, data.destination.y);
-    z = MathHelper.lerp(coeff, data.origin.z, data.destination.z);
   }
 
   @Override
@@ -76,13 +74,14 @@ public class LineParticle extends SpriteTexturedParticle {
     if (this.age++ >= this.lifetime) {
       this.remove();
     } else {
-      if (this.data.gravity) {
-        this.yd -= 0.04D * (double) this.gravity;
-      }
-      this.move(this.xd, this.yd, this.zd);
-      if (this.onGround) {
-        this.xd *= 0.7F;
-        this.zd *= 0.7F;
+      float thisAngle = (float) age / lifetime * (2 * (float) Math.PI * 2) + data.spin;
+      y = data.center.y + MathHelper.sin(0.007312312f * thisAngle);
+      if (!data.inverse) {
+        x = data.center.x + data.radius * MathHelper.sin(thisAngle);
+        z = data.center.x + data.radius * MathHelper.cos(thisAngle);
+      } else {
+        x = data.center.x + data.radius * MathHelper.cos(thisAngle);
+        z = data.center.x + data.radius * MathHelper.sin(thisAngle);
       }
     }
   }
