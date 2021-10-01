@@ -8,6 +8,9 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
 
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 public class GenericParticleData implements IParticleData {
     public float r1 = 1, g1 = 1, b1 = 1, a1 = 1, r2 = 1, g2 = 1, b2 = 1, a2 = 0;
     public float scale1 = 1, scale2 = 0;
@@ -74,87 +77,95 @@ public class GenericParticleData implements IParticleData {
         return getClass().getSimpleName() + ":internal";
     }
 
-    public static final IDeserializer<GenericParticleData> DESERIALIZER = new IDeserializer<GenericParticleData>() {
-        @Override
-        public GenericParticleData fromCommand(ParticleType<GenericParticleData> type, StringReader reader) throws CommandSyntaxException {
-            reader.expect(' ');
-            float r1 = reader.readFloat();
-            reader.expect(' ');
-            float g1 = reader.readFloat();
-            reader.expect(' ');
-            float b1 = reader.readFloat();
-            reader.expect(' ');
-            float a1 = reader.readFloat();
-            reader.expect(' ');
-            float r2 = reader.readFloat();
-            reader.expect(' ');
-            float g2 = reader.readFloat();
-            reader.expect(' ');
-            float b2 = reader.readFloat();
-            reader.expect(' ');
-            float a2 = reader.readFloat();
-            reader.expect(' ');
-            float scale1 = reader.readFloat();
-            reader.expect(' ');
-            float scale2 = reader.readFloat();
-            reader.expect(' ');
-            int lifetime = reader.readInt();
-            reader.expect(' ');
-            float spin = reader.readFloat();
-            reader.expect(' ');
-            boolean gravity = reader.readBoolean();
-            reader.expect(' ');
-            boolean additive = reader.readBoolean();
-            GenericParticleData data = new GenericParticleData(type);
-            data.r1 = r1;
-            data.g1 = g1;
-            data.b1 = b1;
-            data.a1 = a1;
-            data.r2 = r2;
-            data.g2 = g2;
-            data.b2 = b2;
-            data.a2 = a2;
-            data.scale1 = scale1;
-            data.scale2 = scale2;
-            data.lifetime = lifetime;
-            data.spin = spin;
-            data.gravity = gravity;
-            data.additive = additive;
-            return data;
-        }
+    public static class Deserializer<V extends GenericParticleData> implements IDeserializer<V> {
+      private Function<ParticleType<?>, V> builder;
 
-        @Override
-        public GenericParticleData fromNetwork(ParticleType<GenericParticleData> type, PacketBuffer buf) {
-            float r1 = buf.readFloat();
-            float g1 = buf.readFloat();
-            float b1 = buf.readFloat();
-            float a1 = buf.readFloat();
-            float r2 = buf.readFloat();
-            float g2 = buf.readFloat();
-            float b2 = buf.readFloat();
-            float a2 = buf.readFloat();
-            float scale1 = buf.readFloat();
-            float scale2 = buf.readFloat();
-            int lifetime = buf.readInt();
-            float spin = buf.readFloat();
-            boolean gravity = buf.readBoolean();
-            boolean additive = buf.readBoolean();
-            GenericParticleData data = new GenericParticleData(type);
-            data.r1 = r1;
-            data.g1 = g1;
-            data.b1 = b1;
-            data.a1 = a1;
-            data.r2 = r2;
-            data.g2 = g2;
-            data.b2 = b2;
-            data.a2 = a2;
-            data.scale1 = scale1;
-            data.scale2 = scale2;
-            data.lifetime = lifetime;
-            data.spin = spin;
-            data.gravity = gravity;
-            data.additive = additive;
-            return data;
-        }
-    };
+      public Deserializer(Function<ParticleType<?>, V> builder) {
+        this.builder = builder;
+      }
+
+      @Override
+      public V fromCommand(ParticleType<V> type, StringReader reader) throws CommandSyntaxException {
+        reader.expect(' ');
+        float r1 = reader.readFloat();
+        reader.expect(' ');
+        float g1 = reader.readFloat();
+        reader.expect(' ');
+        float b1 = reader.readFloat();
+        reader.expect(' ');
+        float a1 = reader.readFloat();
+        reader.expect(' ');
+        float r2 = reader.readFloat();
+        reader.expect(' ');
+        float g2 = reader.readFloat();
+        reader.expect(' ');
+        float b2 = reader.readFloat();
+        reader.expect(' ');
+        float a2 = reader.readFloat();
+        reader.expect(' ');
+        float scale1 = reader.readFloat();
+        reader.expect(' ');
+        float scale2 = reader.readFloat();
+        reader.expect(' ');
+        int lifetime = reader.readInt();
+        reader.expect(' ');
+        float spin = reader.readFloat();
+        reader.expect(' ');
+        boolean gravity = reader.readBoolean();
+        reader.expect(' ');
+        boolean additive = reader.readBoolean();
+        V data = builder.apply(type);
+        data.r1 = r1;
+        data.g1 = g1;
+        data.b1 = b1;
+        data.a1 = a1;
+        data.r2 = r2;
+        data.g2 = g2;
+        data.b2 = b2;
+        data.a2 = a2;
+        data.scale1 = scale1;
+        data.scale2 = scale2;
+        data.lifetime = lifetime;
+        data.spin = spin;
+        data.gravity = gravity;
+        data.additive = additive;
+        return data;
+      }
+
+      @Override
+      public V fromNetwork(ParticleType<V> type, PacketBuffer buf) {
+        float r1 = buf.readFloat();
+        float g1 = buf.readFloat();
+        float b1 = buf.readFloat();
+        float a1 = buf.readFloat();
+        float r2 = buf.readFloat();
+        float g2 = buf.readFloat();
+        float b2 = buf.readFloat();
+        float a2 = buf.readFloat();
+        float scale1 = buf.readFloat();
+        float scale2 = buf.readFloat();
+        int lifetime = buf.readInt();
+        float spin = buf.readFloat();
+        boolean gravity = buf.readBoolean();
+        boolean additive = buf.readBoolean();
+        V data = builder.apply(type);
+        data.r1 = r1;
+        data.g1 = g1;
+        data.b1 = b1;
+        data.a1 = a1;
+        data.r2 = r2;
+        data.g2 = g2;
+        data.b2 = b2;
+        data.a2 = a2;
+        data.scale1 = scale1;
+        data.scale2 = scale2;
+        data.lifetime = lifetime;
+        data.spin = spin;
+        data.gravity = gravity;
+        data.additive = additive;
+        return data;
+      }
+    }
+
+    public static final Deserializer<GenericParticleData> DESERIALIZER = new Deserializer<>(GenericParticleData::new);
 }
