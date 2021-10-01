@@ -68,6 +68,9 @@ public class WhirlwindParticle extends SpriteTexturedParticle {
   @Override
   public void tick() {
     updateTraits();
+    this.xd = 0;
+    this.yd = 0;
+    this.zd = 0;
     this.xo = this.x;
     this.yo = this.y;
     this.zo = this.z;
@@ -83,6 +86,8 @@ public class WhirlwindParticle extends SpriteTexturedParticle {
         x = data.center.x + data.radius * MathHelper.cos(thisAngle);
         z = data.center.x + data.radius * MathHelper.sin(thisAngle);
       }
+      this.setBoundingBox(this.getBoundingBox().move(x, y, z));
+      this.setLocationFromBoundingbox();
     }
   }
 

@@ -6,6 +6,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import noobanidus.libs.particleslib.client.particle.data.DirectedParticleData;
 import noobanidus.libs.particleslib.client.particle.data.GenericParticleData;
+import noobanidus.libs.particleslib.client.particle.data.WhirlwindParticleData;
 
 import java.util.Random;
 
@@ -15,6 +16,7 @@ public class Particles {
 
     private boolean directed = false;
     private boolean leaf = false;
+    private boolean whirlwind = false;
 
     public ParticleType<?> type;
     public GenericParticleData data;
@@ -24,6 +26,7 @@ public class Particles {
     public double dx = 0, dy = 0, dz = 0;
     public double maxXSpeed = 0, maxYSpeed = 0, maxZSpeed = 0;
     public double maxXDist = 0, maxYDist = 0, maxZDist = 0;
+    public boolean inverse = false;
 
     protected ParticleBuilder(ParticleType<?> type) {
       this.type = type;
@@ -99,6 +102,16 @@ public class Particles {
       return this;
     }
 
+    public ParticleBuilder enableAdditive () {
+      data.additive = true;
+      return this;
+    }
+
+    public ParticleBuilder disableAdditive () {
+      data.additive = false;
+      return this;
+    }
+
     public ParticleBuilder setSpin(float angularVelocity) {
       data.spin = angularVelocity;
       return this;
@@ -116,10 +129,34 @@ public class Particles {
       return this;
     }
 
+    public ParticleBuilder setCenter (Vector3d center) {
+      whirlwind = true;
+      cache2 = null;
+      this.destination = center;
+      return this;
+    }
+
     public ParticleBuilder setDistance(double distance) {
       directed = true;
-      cache = null;
       this.distance = distance;
+      return this;
+    }
+
+    public ParticleBuilder setRadius (double radius) {
+      whirlwind = true;
+      this.distance = radius;
+      return this;
+    }
+
+    public ParticleBuilder invert () {
+      whirlwind = true;
+      inverse = true;
+      return this;
+    }
+
+    public ParticleBuilder uninvert () {
+      whirlwind = true;
+      inverse = false;
       return this;
     }
 
@@ -182,6 +219,7 @@ public class Particles {
     }
 
     private DirectedParticleData cache = null;
+    private WhirlwindParticleData cache2 = null;
 
 
     public ParticleBuilder spawn(World world, double x, double y, double z) {
@@ -217,6 +255,12 @@ public class Particles {
         } else {
           world.addParticle(cache, pos.x + dx, pos.y + dy, pos.z + dz, vx, vy, vz);
         }
+      } else if (this.whirlwind && destination != Vector3d.ZERO) {
+        if (cache2 == null) {
+          cache2 = new WhirlwindParticleData(data.getType(), data, this.destination, this.inverse, this.distance);
+        }
+
+        world.addParticle(cache2, pos.x + dx, pos.y + dy, pos.z + dz, vx, vy, vz);
       } else {
         world.addParticle(data, pos.x + dx, pos.y + dy, pos.z + dz, vx, vy, vz);
       }
