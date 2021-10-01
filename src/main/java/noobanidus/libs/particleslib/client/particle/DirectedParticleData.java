@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 public class DirectedParticleData extends GenericParticleData {
   public Vector3d destination = Vector3d.ZERO;
-  public double distance = 60;
+  public double distance = 0;
 
   public static Codec<DirectedParticleData> directedCodecFor(ParticleType<?> type) {
     return RecordCodecBuilder.create(instance -> instance.group(

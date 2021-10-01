@@ -4,7 +4,6 @@ import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.RegistryObject;
 
 import java.util.Random;
 
@@ -17,7 +16,7 @@ public class Particles {
     public ParticleType<?> type;
     public GenericParticleData data;
     public Vector3d destination = Vector3d.ZERO;
-    public double distance = 60;
+    public double distance = 0;
     public double vx = 0, vy = 0, vz = 0;
     public double dx = 0, dy = 0, dz = 0;
     public double maxXSpeed = 0, maxYSpeed = 0, maxZSpeed = 0;
@@ -107,14 +106,14 @@ public class Particles {
       return this;
     }
 
-    public ParticleBuilder setDestination (Vector3d destination) {
+    public ParticleBuilder setDestination(Vector3d destination) {
       directed = true;
       cache = null;
       this.destination = destination;
       return this;
     }
 
-    public ParticleBuilder setDistance (double distance) {
+    public ParticleBuilder setDistance(double distance) {
       directed = true;
       cache = null;
       this.distance = distance;
@@ -171,7 +170,13 @@ public class Particles {
 
     private DirectedParticleData cache = null;
 
+
     public ParticleBuilder spawn(World world, double x, double y, double z) {
+      // TODO: Calculate motion, etc, base off of potential destination
+      return spawn(world, new Vector3d(x, y, z));
+    }
+
+    public ParticleBuilder spawn(World world, Vector3d pos) {
       double yaw = random.nextFloat() * Math.PI * 2, pitch = random.nextFloat() * Math.PI - Math.PI / 2;
       double xSpeed = random.nextFloat() * maxXSpeed, ySpeed = random.nextFloat() * maxYSpeed, zSpeed = random.nextFloat() * maxZSpeed;
       this.vx += Math.sin(yaw) * Math.cos(pitch) * xSpeed;
@@ -183,20 +188,31 @@ public class Particles {
       this.dy = Math.sin(pitch2) * yDist;
       this.dz = Math.cos(yaw2) * Math.cos(pitch2) * zDist;
 
-      if (this.directed) {
+      if (this.directed && destination != Vector3d.ZERO) {
         if (cache == null) {
           cache = new DirectedParticleData(data.getType(), data, this.destination, this.distance);
         }
-        world.addParticle(cache, x + dx, y + dy, z + dz, vx, vy, vz);
+
+        // TODO: Scale based on distance/lifetime with speed instead of forced speed?
+        Vector3d origAngle = pos.subtract(destination);
+        cache.lifetime = (int) ((origAngle.lengthSqr() * 10) - 5);
+
+        Vector3d angle = destination.subtract(pos).normalize().scale(0.05);
+
+        world.addParticle(cache, pos.x + dx, pos.y + dy, pos.z + dz, angle.x, angle.y, angle.z);
       } else {
-        world.addParticle(data, x + dx, y + dy, z + dz, vx, vy, vz);
+        world.addParticle(data, pos.x + dx, pos.y + dy, pos.z + dz, vx, vy, vz);
       }
       return this;
     }
 
     public ParticleBuilder repeat(World world, double x, double y, double z, int n) {
+      return repeat(world, new Vector3d(x, y, z), n);
+    }
+
+    public ParticleBuilder repeat (World world, Vector3d pos, int n) {
       for (int i = 0; i < n; i++) {
-        spawn(world, x, y, z);
+        spawn(world, pos);
       }
       return this;
     }
