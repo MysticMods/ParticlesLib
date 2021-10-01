@@ -3,7 +3,7 @@ package noobanidus.libs.particleslib.client.particle.type;
 import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.world.ClientWorld;
-import noobanidus.libs.particleslib.client.particle.DirectedParticleData;
+import noobanidus.libs.particleslib.client.particle.data.DirectedParticleData;
 import noobanidus.libs.particleslib.client.particle.LeafDirectedParticle;
 
 public class LeafDirectedParticleType extends DirectedParticleType {

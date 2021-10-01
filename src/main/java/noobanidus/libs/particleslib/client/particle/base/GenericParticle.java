@@ -1,4 +1,4 @@
-package noobanidus.libs.particleslib.client.particle;
+package noobanidus.libs.particleslib.client.particle.base;
 
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.particle.IParticleRenderType;
@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.ColorHelper;
 import net.minecraft.util.math.MathHelper;
+import noobanidus.libs.particleslib.client.particle.data.GenericParticleData;
 import noobanidus.libs.particleslib.client.particle.render.SpriteParticleRenderType;
 import noobanidus.libs.particleslib.client.render.DelayedRender;
 import noobanidus.libs.particleslib.client.util.RenderUtil;

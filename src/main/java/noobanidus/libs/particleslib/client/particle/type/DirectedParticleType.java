@@ -6,8 +6,8 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.ParticleType;
-import noobanidus.libs.particleslib.client.particle.DirectedParticle;
-import noobanidus.libs.particleslib.client.particle.DirectedParticleData;
+import noobanidus.libs.particleslib.client.particle.base.DirectedParticle;
+import noobanidus.libs.particleslib.client.particle.data.DirectedParticleData;
 
 public class DirectedParticleType extends ParticleType<DirectedParticleData> {
   public DirectedParticleType() {

@@ -1,6 +1,8 @@
 package noobanidus.libs.particleslib.client.particle;
 
 import net.minecraft.client.world.ClientWorld;
+import noobanidus.libs.particleslib.client.particle.base.DirectedParticle;
+import noobanidus.libs.particleslib.client.particle.data.DirectedParticleData;
 import noobanidus.libs.particleslib.client.particle.render.GlowParticleRenderType;
 import noobanidus.libs.particleslib.client.particle.render.SpriteParticleRenderType;
 import noobanidus.libs.particleslib.client.util.RenderUtil;

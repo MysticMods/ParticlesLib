@@ -4,6 +4,8 @@ import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import noobanidus.libs.particleslib.client.particle.data.DirectedParticleData;
+import noobanidus.libs.particleslib.client.particle.data.GenericParticleData;
 
 import java.util.Random;
 
@@ -12,6 +14,7 @@ public class Particles {
     private static final Random random = new Random();
 
     private boolean directed = false;
+    private boolean leaf = false;
 
     public ParticleType<?> type;
     public GenericParticleData data;
@@ -168,6 +171,16 @@ public class Particles {
       return this;
     }
 
+    public ParticleBuilder enableDestinationVelocity () {
+      this.leaf = true;
+      return this;
+    }
+
+    public ParticleBuilder disableDestinationVelocity () {
+      this.leaf = false;
+      return this;
+    }
+
     private DirectedParticleData cache = null;
 
 
@@ -190,16 +203,20 @@ public class Particles {
 
       if (this.directed && destination != Vector3d.ZERO) {
         if (cache == null) {
-          cache = new DirectedParticleData(data.getType(), data, this.destination, this.distance);
+          cache = new DirectedParticleData(data.getType(), data, pos, this.destination, this.distance);
         }
 
-        // TODO: Scale based on distance/lifetime with speed instead of forced speed?
-        Vector3d origAngle = pos.subtract(destination);
-        cache.lifetime = (int) ((origAngle.lengthSqr() * 10) - 5);
+        if (leaf) {
+          // TODO: Scale based on distance/lifetime with speed instead of forced speed?
+          Vector3d origAngle = pos.subtract(destination);
+          cache.lifetime = (int) ((origAngle.lengthSqr() * 10) - 5);
 
-        Vector3d angle = destination.subtract(pos).normalize().scale(0.05);
+          Vector3d angle = destination.subtract(pos).normalize().scale(0.05);
 
-        world.addParticle(cache, pos.x + dx, pos.y + dy, pos.z + dz, angle.x, angle.y, angle.z);
+          world.addParticle(cache, pos.x + dx, pos.y + dy, pos.z + dz, angle.x, angle.y, angle.z);
+        } else {
+          world.addParticle(cache, pos.x + dx, pos.y + dy, pos.z + dz, vx, vy, vz);
+        }
       } else {
         world.addParticle(data, pos.x + dx, pos.y + dy, pos.z + dz, vx, vy, vz);
       }

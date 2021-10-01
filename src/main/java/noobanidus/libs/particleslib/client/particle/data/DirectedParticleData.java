@@ -1,4 +1,4 @@
-package noobanidus.libs.particleslib.client.particle;
+package noobanidus.libs.particleslib.client.particle.data;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -12,20 +12,18 @@ import noobanidus.libs.noobutil.util.Codecs;
 import java.util.function.Function;
 
 public class DirectedParticleData extends GenericParticleData {
+  public Vector3d origin = Vector3d.ZERO;
   public Vector3d destination = Vector3d.ZERO;
   public double distance = 0;
 
   public static Codec<DirectedParticleData> directedCodecFor(ParticleType<?> type) {
     return RecordCodecBuilder.create(instance -> instance.group(
             codecFor(type).fieldOf("data").forGetter(d -> d),
+            Codecs.VECTOR_3D.fieldOf("origin").forGetter(d -> d.origin),
             Codecs.VECTOR_3D.fieldOf("destination").forGetter(d -> d.destination),
             Codec.DOUBLE.fieldOf("distance").forGetter(d -> d.distance))
-        .apply(instance, (d, dest, distance) -> {
-          DirectedParticleData data = new DirectedParticleData(type, d);
-          data.destination = dest;
-          data.distance = distance;
-          return data;
-        }));
+        .apply(instance, (d, origin, dest, distance) -> new DirectedParticleData(type, d, origin, dest, distance)
+        ));
   }
 
   public DirectedParticleData(ParticleType<?> type) {
@@ -48,17 +46,20 @@ public class DirectedParticleData extends GenericParticleData {
     this.spin = data.spin;
     this.gravity = data.gravity;
     this.additive = data.additive;
+    this.collides = data.collides;
   }
 
-  public DirectedParticleData(ParticleType<?> type, GenericParticleData data, Vector3d destination, double distance) {
+  public DirectedParticleData(ParticleType<?> type, GenericParticleData data, Vector3d origin, Vector3d destination, double distance) {
     this(type, data);
     this.destination = destination;
     this.distance = distance;
+    this.origin = origin;
   }
 
   @Override
   public void writeToNetwork(PacketBuffer buffer) {
     super.writeToNetwork(buffer);
+    buffer.writeDouble(origin.x).writeDouble(origin.y).writeDouble(origin.z);
     buffer.writeDouble(destination.x).writeDouble(destination.y).writeDouble(destination.z);
     buffer.writeDouble(distance);
   }
@@ -72,14 +73,21 @@ public class DirectedParticleData extends GenericParticleData {
     public DirectedParticleData fromCommand(ParticleType<DirectedParticleData> particleType, StringReader reader) throws CommandSyntaxException {
       DirectedParticleData data = super.fromCommand(particleType, reader);
       reader.expect(' ');
-      double x = reader.readDouble();
+      double x1 = reader.readDouble();
       reader.expect(' ');
-      double y = reader.readDouble();
+      double y1 = reader.readDouble();
       reader.expect(' ');
-      double z = reader.readDouble();
+      double z1 = reader.readDouble();
+      reader.expect(' ');
+      double x2 = reader.readDouble();
+      reader.expect(' ');
+      double y2 = reader.readDouble();
+      reader.expect(' ');
+      double z2 = reader.readDouble();
       reader.expect(' ');
       double distance = reader.readDouble();
-      data.destination = new Vector3d(x, y, z);
+      data.origin = new Vector3d(x1, y1, z1);
+      data.destination = new Vector3d(x2, y2, z2);
       data.distance = distance;
       return data;
     }
@@ -87,6 +95,7 @@ public class DirectedParticleData extends GenericParticleData {
     @Override
     public DirectedParticleData fromNetwork(ParticleType<DirectedParticleData> particleType, PacketBuffer buffer) {
       DirectedParticleData data = super.fromNetwork(particleType, buffer);
+      data.origin = new Vector3d(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
       data.destination = new Vector3d(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
       data.distance = buffer.readDouble();
       return data;

@@ -4,7 +4,7 @@ import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.world.ClientWorld;
 import noobanidus.libs.particleslib.client.particle.CloudParticle;
-import noobanidus.libs.particleslib.client.particle.GenericParticleData;
+import noobanidus.libs.particleslib.client.particle.data.GenericParticleData;
 
 public class CloudParticleType extends GenericParticleType {
   public CloudParticleType() {

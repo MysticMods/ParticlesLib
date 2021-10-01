@@ -3,8 +3,7 @@ package noobanidus.libs.particleslib.client.particle.type;
 import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.world.ClientWorld;
-import noobanidus.libs.particleslib.client.particle.GenericParticleData;
-import noobanidus.libs.particleslib.client.particle.PetalParticle;
+import noobanidus.libs.particleslib.client.particle.data.GenericParticleData;
 import noobanidus.libs.particleslib.client.particle.StarParticle;
 
 public class StarParticleType extends GenericParticleType {

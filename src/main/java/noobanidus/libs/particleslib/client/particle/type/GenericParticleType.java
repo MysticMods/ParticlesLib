@@ -6,8 +6,8 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.ParticleType;
-import noobanidus.libs.particleslib.client.particle.GenericParticle;
-import noobanidus.libs.particleslib.client.particle.GenericParticleData;
+import noobanidus.libs.particleslib.client.particle.base.GenericParticle;
+import noobanidus.libs.particleslib.client.particle.data.GenericParticleData;
 
 public abstract class GenericParticleType extends ParticleType<GenericParticleData> {
   public GenericParticleType() {

@@ -1,4 +1,4 @@
-package noobanidus.libs.particleslib.client.particle;
+package noobanidus.libs.particleslib.client.particle.base;
 
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.particle.IParticleRenderType;
@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.ColorHelper;
 import net.minecraft.util.math.MathHelper;
+import noobanidus.libs.particleslib.client.particle.data.DirectedParticleData;
 import noobanidus.libs.particleslib.client.particle.render.SpriteParticleRenderType;
 import noobanidus.libs.particleslib.client.render.DelayedRender;
 import noobanidus.libs.particleslib.client.util.RenderUtil;
@@ -15,18 +16,18 @@ import noobanidus.libs.particleslib.config.ConfigManager;
 
 import java.awt.*;
 
-public class DirectedParticle extends SpriteTexturedParticle {
+public class LineParticle extends SpriteTexturedParticle {
   public DirectedParticleData data;
   public float[] hsv1 = new float[3];
   public float[] hsv2 = new float[3];
   private final IParticleRenderType renderer;
   private final RenderType type;
 
-  public DirectedParticle(ClientWorld world, DirectedParticleData data, double x, double y, double z, double vx, double vy, double vz) {
+  public LineParticle(ClientWorld world, DirectedParticleData data, double x, double y, double z, double vx, double vy, double vz) {
     this(world, data, x, y, z, vx, vy, vz, SpriteParticleRenderType.INSTANCE, RenderUtil.DELAYED_PARTICLE);
   }
 
-  protected DirectedParticle(ClientWorld world, DirectedParticleData data, double x, double y, double z, double vx, double vy, double vz, IParticleRenderType renderer, RenderType type) {
+  protected LineParticle(ClientWorld world, DirectedParticleData data, double x, double y, double z, double vx, double vy, double vz, IParticleRenderType renderer, RenderType type) {
     super(world, x, y, z, vx, vy, vz);
     this.type = type;
     this.renderer = renderer;
@@ -82,9 +83,6 @@ public class DirectedParticle extends SpriteTexturedParticle {
         this.yd -= 0.04D * (double) this.gravity;
       }
       this.move(this.xd, this.yd, this.zd);
-/*      this.xd *= 0.98F;
-      this.yd *= 0.98F;
-      this.zd *= 0.98F;*/
       if (this.onGround) {
         this.xd *= 0.7F;
         this.zd *= 0.7F;

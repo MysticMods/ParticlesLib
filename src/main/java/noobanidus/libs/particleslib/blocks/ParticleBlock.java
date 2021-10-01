@@ -41,6 +41,7 @@ public class ParticleBlock extends Block {
             .setDestination(me)
             .setDistance(0.6)
             .disableGravity()
+            .enableDestinationVelocity()
             .spawn(level, dest);
       }
     });
