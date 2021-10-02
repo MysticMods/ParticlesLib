@@ -260,7 +260,7 @@ public class Particles {
           cache2 = new WhirlwindParticleData(data.getType(), data, this.destination, this.inverse, this.distance);
         }
 
-        world.addParticle(cache2, pos.x + dx, pos.y + dy, pos.z + dz, vx, vy, vz);
+        world.addParticle(cache2, pos.x + dx, pos.y + dy, pos.z + dz, 0, 0, 0);
       } else {
         world.addParticle(data, pos.x + dx, pos.y + dy, pos.z + dz, vx, vy, vz);
       }
