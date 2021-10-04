@@ -25,6 +25,11 @@ public class ModParticles {
   public static RegistryEntry<SparkleParticleType> SPARKLE_PARTICLE = REGISTRATE.simple("sparkle_particle", ParticleType.class, SparkleParticleType::new);
   public static RegistryEntry<StarParticleType> STAR_PARTICLE = REGISTRATE.simple("star_particle", ParticleType.class, StarParticleType::new);
   public static RegistryEntry<ThornParticleType> THORN_PARTICLE = REGISTRATE.simple("thorn_particle", ParticleType.class, ThornParticleType::new);
+  public static RegistryEntry<DenseSmokeParticleType> DENSE_SMOKE_PARTICLE = REGISTRATE.simple("dense_smoke_particle", ParticleType.class, DenseSmokeParticleType::new);
+  public static RegistryEntry<FieryParticleType> FIERY_PARTICLE = REGISTRATE.simple("fiery_particle", ParticleType.class, FieryParticleType::new);
+  public static RegistryEntry<MoteParticleType> MOTE_PARTICLE = REGISTRATE.simple("mote_particle", ParticleType.class, MoteParticleType::new);
+  public static RegistryEntry<RadialParticleType> RADIAL_PARTICLE = REGISTRATE.simple("radial_particle", ParticleType.class, RadialParticleType::new);
+  public static RegistryEntry<SoftRadialParticleType> SOFT_RADIAL_PARTICLE = REGISTRATE.simple("soft_radial_particle", ParticleType.class, SoftRadialParticleType::new);
 
   public static void load () {
 

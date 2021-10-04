@@ -24,7 +24,7 @@ public class ParticleBlock extends Block {
   @OnlyIn(Dist.CLIENT)
   @Override
   public void animateTick(BlockState state, World level, BlockPos pos, Random random) {
-    Vector3d center = new Vector3d(pos.getX() + 0.5, pos.getY() + 3.5, pos.getZ() + 0.5);
+/*    Vector3d center = new Vector3d(pos.getX() + 0.5, pos.getY() + 3.5, pos.getZ() + 0.5);
 
     for (int s = 0; s < 12; s++) {
       double r = stages[s];
@@ -51,7 +51,7 @@ public class ParticleBlock extends Block {
             .setRadius(r * 0.85f)
             .spawn(level, center.add(0, y, 0));
       }
-    }
+    }*/
 /*    Vector3d me = new Vector3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 
     BlockPos.betweenClosedStream(RANGE.move(pos)).filter(o -> level.getBlockState(o).is(Blocks.MELON)).forEach(o -> {
@@ -69,14 +69,13 @@ public class ParticleBlock extends Block {
       }
     });*/
 
-/*    Particles.create(ModParticles.THORN_PARTICLE)
+    Particles.create(ModParticles.SOFT_RADIAL_PARTICLE)
         .addVelocity(0, 0, 0)
         .setAlpha(0.8f, 0.3f)
         .setScale(0.2f)
         .setColor(0.875f, 0.3f, 0.56f, 0.375f, 0.5f, 0.95f)
         .setLifetime(10)
         .disableGravity()
-        .spawn(level, pos.getX() + 0.5, pos.getY() + 3.5, pos.getZ() + 0.5);*/
-
+        .spawn(level, pos.getX() + 0.5, pos.getY() + 3.5, pos.getZ() + 0.5);
   }
 }

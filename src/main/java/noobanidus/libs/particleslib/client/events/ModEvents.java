@@ -31,6 +31,11 @@ public class ModEvents {
     manager.register(ModParticles.THORN_PARTICLE.get(), ThornParticleType.Factory::new);
     manager.register(ModParticles.LINE_GLOW_PARTICLE.get(), LineGlowParticleType.Factory::new);
     manager.register(ModParticles.LEAF_WHIRLWIND_PARTICLE.get(), LeafWhirlwindParticleType.Factory::new);
+    manager.register(ModParticles.DENSE_SMOKE_PARTICLE.get(), DenseSmokeParticleType.Factory::new);
+    manager.register(ModParticles.FIERY_PARTICLE.get(), FieryParticleType.Factory::new);
+    manager.register(ModParticles.MOTE_PARTICLE.get(), MoteParticleType.Factory::new);
+    manager.register(ModParticles.RADIAL_PARTICLE.get(), RadialParticleType.Factory::new);
+    manager.register(ModParticles.SOFT_RADIAL_PARTICLE.get(), SoftRadialParticleType.Factory::new);
   }
 }
 
