@@ -1,5 +1,6 @@
 package noobanidus.libs.particleslib.client.render;
 
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
@@ -12,16 +13,15 @@ Original source: https://github.com/mekanism/Mekanism/blob/1.16.x/src/main/java/
  */
 
 public class PLibRenderTypes extends RenderType {
-  public static final RenderType MEK_LIGHTNING = create("mek_lightning", DefaultVertexFormat.POSITION_COLOR, GL11.GL_QUADS, 256,
+  public static final RenderType MEK_LIGHTNING = create("mek_lightning", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256,
       false, true, RenderType.CompositeState.builder()
-          .setWriteMaskState(COLOR_DEPTH_WRITE)
+          .setShaderState(RenderStateShard.POSITION_COLOR_SHADER)
           .setTransparencyState(LIGHTNING_TRANSPARENCY)
-          .setShadeModelState(SMOOTH_SHADE)
           .createCompositeState(false)
   );
 
   //Ignored
-  private PLibRenderTypes(String name, VertexFormat format, int drawMode, int bufferSize, boolean useDelegate, boolean needsSorting, Runnable runnablePre, Runnable runnablePost) {
+  private PLibRenderTypes(String name, VertexFormat format, VertexFormat.Mode drawMode, int bufferSize, boolean useDelegate, boolean needsSorting, Runnable runnablePre, Runnable runnablePost) {
     super(name, format, drawMode, bufferSize, useDelegate, needsSorting, runnablePre, runnablePost);
   }
 }

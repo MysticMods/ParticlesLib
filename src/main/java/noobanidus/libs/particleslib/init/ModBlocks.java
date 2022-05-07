@@ -1,7 +1,6 @@
 package noobanidus.libs.particleslib.init;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
-import net.minecraft.block.Blocks;
 import noobanidus.libs.particleslib.blocks.ParticleBlock;
 
 import static noobanidus.libs.particleslib.ParticlesLib.REGISTRATE;

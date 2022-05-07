@@ -10,15 +10,13 @@ import net.minecraft.core.particles.ParticleType;
 
 import java.util.function.Function;
 
-import net.minecraft.core.particles.ParticleOptions.Deserializer;
-
 public class GenericParticleData implements ParticleOptions {
   public float r1 = 1, g1 = 1, b1 = 1, a1 = 1, r2 = 1, g2 = 1, b2 = 1, a2 = 0;
   public float scale1 = 1, scale2 = 0;
   public int lifetime = 20;
   public float spin = 0;
   public boolean gravity = true;
-  public boolean additive = false;
+  public boolean additive = true;
   public boolean collides = true;
 
   public static Codec<GenericParticleData> codecFor(ParticleType<?> type) {
@@ -85,10 +83,10 @@ public class GenericParticleData implements ParticleOptions {
     return getClass().getSimpleName() + ":internal";
   }
 
-  public static class Deserializer<V extends GenericParticleData> implements Deserializer<V> {
+  public static class GenericDeserializer<V extends GenericParticleData> implements Deserializer<V> {
     private final Function<ParticleType<?>, V> builder;
 
-    public Deserializer(Function<ParticleType<?>, V> builder) {
+    public GenericDeserializer(Function<ParticleType<?>, V> builder) {
       this.builder = builder;
     }
 
@@ -180,5 +178,5 @@ public class GenericParticleData implements ParticleOptions {
     }
   }
 
-  public static final Deserializer<GenericParticleData> DESERIALIZER = new Deserializer<>(GenericParticleData::new);
+  public static final GenericDeserializer<GenericParticleData> DESERIALIZER = new GenericDeserializer<>(GenericParticleData::new);
 }

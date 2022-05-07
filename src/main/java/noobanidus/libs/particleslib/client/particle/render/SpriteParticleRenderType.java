@@ -1,44 +1,45 @@
 package noobanidus.libs.particleslib.client.particle.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleRenderType;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.Tesselator;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import noobanidus.libs.particleslib.client.events.RenderTickHandler;
+import noobanidus.libs.particleslib.init.ModShaders;
 import org.lwjgl.opengl.GL11;
 
 public class SpriteParticleRenderType implements ParticleRenderType {
-    public static final SpriteParticleRenderType INSTANCE = new SpriteParticleRenderType();
+  public static final SpriteParticleRenderType INSTANCE = new SpriteParticleRenderType();
 
-    private static void beginRenderCommon(BufferBuilder bufferBuilder, TextureManager textureManager) {
-        RenderSystem.depthMask(false);
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        RenderSystem.alphaFunc(GL11.GL_GEQUAL, 0.00390625f);
+  private static void beginRenderCommon(BufferBuilder bufferBuilder, TextureManager textureManager) {
+    RenderSystem.depthMask(false);
+    RenderSystem.enableBlend();
+    RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+    RenderSystem.setShader(ModShaders::getGlowingSpriteShader);
+    RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES);
+    RenderTickHandler.particleMVMatrix = RenderSystem.getModelViewMatrix();
+    bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
+  }
 
-        textureManager.bind(TextureAtlas.LOCATION_PARTICLES);
-        bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormat.PARTICLE);
-    }
+  private static void endRenderCommon() {
+    Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES).restoreLastBlurMipmap();
+    RenderSystem.depthMask(true);
+  }
 
-    private static void endRenderCommon() {
-        Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES).restoreLastBlurMipmap();
-        RenderSystem.enableAlphaTest();
-        RenderSystem.defaultAlphaFunc();
-        RenderSystem.depthMask(true);
-    }
+  @Override
+  public void begin(BufferBuilder b, TextureManager tex) {
+    beginRenderCommon(b, tex);
+  }
 
-    @Override
-    public void begin(BufferBuilder b, TextureManager tex) {
-        beginRenderCommon(b, tex);
-    }
-
-    @Override
-    public void end(Tesselator t) {
-        t.end();
-        RenderSystem.enableDepthTest();
-        endRenderCommon();
-    }
+  @Override
+  public void end(Tesselator t) {
+    t.end();
+    RenderSystem.enableDepthTest();
+    endRenderCommon();
+  }
 }

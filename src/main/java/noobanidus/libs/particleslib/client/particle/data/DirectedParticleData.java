@@ -64,7 +64,7 @@ public class DirectedParticleData extends GenericParticleData {
     buffer.writeDouble(distance);
   }
 
-  public static class DirectedDeserializer extends Deserializer<DirectedParticleData> {
+  public static class DirectedDeserializer extends GenericDeserializer<DirectedParticleData> {
     public DirectedDeserializer(Function<ParticleType<?>, DirectedParticleData> builder) {
       super(builder);
     }

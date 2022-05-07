@@ -17,13 +17,13 @@ ${modDescription}
 [[dependencies.particleslib]]
     modId="forge"
     mandatory=true
-    versionRange="[36,]"
+    versionRange="[40,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.particleslib]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.5]"
+    versionRange="[1.18.2,)"
     ordering="NONE"
     side="BOTH"

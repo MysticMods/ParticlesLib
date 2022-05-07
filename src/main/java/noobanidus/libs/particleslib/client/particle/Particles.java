@@ -2,8 +2,8 @@ package noobanidus.libs.particleslib.client.particle;
 
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import noobanidus.libs.particleslib.client.particle.data.DirectedParticleData;
 import noobanidus.libs.particleslib.client.particle.data.GenericParticleData;
 import noobanidus.libs.particleslib.client.particle.data.WhirlwindParticleData;
@@ -102,12 +102,12 @@ public class Particles {
       return this;
     }
 
-    public ParticleBuilder enableAdditive () {
+    public ParticleBuilder enableAdditive() {
       data.additive = true;
       return this;
     }
 
-    public ParticleBuilder disableAdditive () {
+    public ParticleBuilder disableAdditive() {
       data.additive = false;
       return this;
     }
@@ -129,7 +129,7 @@ public class Particles {
       return this;
     }
 
-    public ParticleBuilder setCenter (Vec3 center) {
+    public ParticleBuilder setCenter(Vec3 center) {
       whirlwind = true;
       cache2 = null;
       this.destination = center;
@@ -142,19 +142,19 @@ public class Particles {
       return this;
     }
 
-    public ParticleBuilder setRadius (double radius) {
+    public ParticleBuilder setRadius(double radius) {
       whirlwind = true;
       this.distance = radius;
       return this;
     }
 
-    public ParticleBuilder invert () {
+    public ParticleBuilder invert() {
       whirlwind = true;
       inverse = true;
       return this;
     }
 
-    public ParticleBuilder uninvert () {
+    public ParticleBuilder uninvert() {
       whirlwind = true;
       inverse = false;
       return this;
@@ -208,12 +208,12 @@ public class Particles {
       return this;
     }
 
-    public ParticleBuilder enableDestinationVelocity () {
+    public ParticleBuilder enableDestinationVelocity() {
       this.leaf = true;
       return this;
     }
 
-    public ParticleBuilder disableDestinationVelocity () {
+    public ParticleBuilder disableDestinationVelocity() {
       this.leaf = false;
       return this;
     }
@@ -271,7 +271,7 @@ public class Particles {
       return repeat(world, new Vec3(x, y, z), n);
     }
 
-    public ParticleBuilder repeat (Level world, Vec3 pos, int n) {
+    public ParticleBuilder repeat(Level world, Vec3 pos, int n) {
       for (int i = 0; i < n; i++) {
         spawn(world, pos);
       }

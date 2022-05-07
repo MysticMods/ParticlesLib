@@ -6,6 +6,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import noobanidus.libs.particleslib.ParticlesLib;
 
 import java.nio.file.Path;
@@ -42,7 +43,7 @@ public class ConfigManager {
   }
 
   @SubscribeEvent
-  public static void configReloaded(ModConfig.ModConfigEvent event) {
+  public static void configReloaded(ModConfigEvent event) {
     if (event.getConfig().getType() == ModConfig.Type.COMMON) {
       COMMON_CONFIG.setConfig(event.getConfig().getConfigData());
       ParticlesLib.LOG.info("ParticlesLib common configuration reloaded");

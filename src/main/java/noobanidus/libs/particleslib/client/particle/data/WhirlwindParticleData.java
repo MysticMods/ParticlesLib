@@ -64,7 +64,7 @@ public class WhirlwindParticleData extends GenericParticleData {
     buffer.writeDouble(radius);
   }
 
-  public static class WhirlwindDeserializer extends Deserializer<WhirlwindParticleData> {
+  public static class WhirlwindDeserializer extends GenericDeserializer<WhirlwindParticleData> {
     public WhirlwindDeserializer(Function<ParticleType<?>, WhirlwindParticleData> builder) {
       super(builder);
     }
