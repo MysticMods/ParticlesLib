@@ -1,11 +1,11 @@
 package noobanidus.libs.particleslib.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import noobanidus.libs.particleslib.client.particle.Particles;
@@ -13,17 +13,19 @@ import noobanidus.libs.particleslib.init.ModParticles;
 
 import java.util.Random;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class ParticleBlock extends Block {
   public ParticleBlock(Properties p_i48440_1_) {
     super(p_i48440_1_);
   }
 
-  private static AxisAlignedBB RANGE = new AxisAlignedBB(-9, -9, -9, 10, 10, 10);
+  private static AABB RANGE = new AABB(-9, -9, -9, 10, 10, 10);
   private static final double[] stages = new double[]{0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
 
   @OnlyIn(Dist.CLIENT)
   @Override
-  public void animateTick(BlockState state, World level, BlockPos pos, Random random) {
+  public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
 /*    Vector3d center = new Vector3d(pos.getX() + 0.5, pos.getY() + 3.5, pos.getZ() + 0.5);
 
     for (int s = 0; s < 12; s++) {

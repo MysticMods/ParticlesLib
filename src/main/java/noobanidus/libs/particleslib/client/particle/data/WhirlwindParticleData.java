@@ -4,15 +4,15 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.world.phys.Vec3;
 import noobanidus.libs.noobutil.util.Codecs;
 
 import java.util.function.Function;
 
 public class WhirlwindParticleData extends GenericParticleData {
-  public Vector3d center = Vector3d.ZERO;
+  public Vec3 center = Vec3.ZERO;
   public boolean inverse = false;
   public double radius = 0;
 
@@ -49,7 +49,7 @@ public class WhirlwindParticleData extends GenericParticleData {
     this.collides = data.collides;
   }
 
-  public WhirlwindParticleData(ParticleType<?> type, GenericParticleData data, Vector3d center, boolean inverse, double radius) {
+  public WhirlwindParticleData(ParticleType<?> type, GenericParticleData data, Vec3 center, boolean inverse, double radius) {
     this(type, data);
     this.inverse = inverse;
     this.radius = radius;
@@ -57,7 +57,7 @@ public class WhirlwindParticleData extends GenericParticleData {
   }
 
   @Override
-  public void writeToNetwork(PacketBuffer buffer) {
+  public void writeToNetwork(FriendlyByteBuf buffer) {
     super.writeToNetwork(buffer);
     buffer.writeDouble(center.x).writeDouble(center.y).writeDouble(center.z);
     buffer.writeBoolean(inverse);
@@ -82,16 +82,16 @@ public class WhirlwindParticleData extends GenericParticleData {
       boolean inverse = reader.readBoolean();
       reader.expect(' ');
       double radius = reader.readDouble();
-      data.center = new Vector3d(x1, y1, z1);
+      data.center = new Vec3(x1, y1, z1);
       data.inverse = inverse;
       data.radius = radius;
       return data;
     }
 
     @Override
-    public WhirlwindParticleData fromNetwork(ParticleType<WhirlwindParticleData> particleType, PacketBuffer buffer) {
+    public WhirlwindParticleData fromNetwork(ParticleType<WhirlwindParticleData> particleType, FriendlyByteBuf buffer) {
       WhirlwindParticleData data = super.fromNetwork(particleType, buffer);
-      data.center = new Vector3d(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
+      data.center = new Vec3(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
       data.inverse = buffer.readBoolean();
       data.radius = buffer.readDouble();
       return data;

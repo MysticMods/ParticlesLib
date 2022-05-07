@@ -1,13 +1,13 @@
 package noobanidus.libs.particleslib.client.particle.base;
 
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.particle.IParticleRenderType;
-import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.client.renderer.ActiveRenderInfo;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.ColorHelper;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.util.FastColor;
+import net.minecraft.util.Mth;
 import noobanidus.libs.particleslib.client.particle.data.DirectedParticleData;
 import noobanidus.libs.particleslib.client.particle.render.SpriteParticleRenderType;
 import noobanidus.libs.particleslib.client.render.DelayedRender;
@@ -16,18 +16,18 @@ import noobanidus.libs.particleslib.config.ConfigManager;
 
 import java.awt.*;
 
-public class LineParticle extends SpriteTexturedParticle {
+public class LineParticle extends TextureSheetParticle {
   public DirectedParticleData data;
   public float[] hsv1 = new float[3];
   public float[] hsv2 = new float[3];
-  private final IParticleRenderType renderer;
+  private final ParticleRenderType renderer;
   private final RenderType type;
 
-  public LineParticle(ClientWorld world, DirectedParticleData data, double x, double y, double z, double vx, double vy, double vz) {
+  public LineParticle(ClientLevel world, DirectedParticleData data, double x, double y, double z, double vx, double vy, double vz) {
     this(world, data, x, y, z, vx, vy, vz, SpriteParticleRenderType.INSTANCE, RenderUtil.DELAYED_PARTICLE);
   }
 
-  protected LineParticle(ClientWorld world, DirectedParticleData data, double x, double y, double z, double vx, double vy, double vz, IParticleRenderType renderer, RenderType type) {
+  protected LineParticle(ClientLevel world, DirectedParticleData data, double x, double y, double z, double vx, double vy, double vz, ParticleRenderType renderer, RenderType type) {
     super(world, x, y, z, vx, vy, vz);
     this.type = type;
     this.renderer = renderer;
@@ -50,21 +50,21 @@ public class LineParticle extends SpriteTexturedParticle {
 
   protected void updateTraits() {
     float coeff = getCoeff();
-    quadSize = MathHelper.lerp(coeff, data.scale1, data.scale2);
-    float h = MathHelper.rotLerp(coeff, 360 * hsv1[0], 360 * hsv2[0]) / 360;
-    float s = MathHelper.lerp(coeff, hsv1[1], hsv2[1]);
-    float v = MathHelper.lerp(coeff, hsv1[2], hsv2[2]);
+    quadSize = Mth.lerp(coeff, data.scale1, data.scale2);
+    float h = Mth.rotLerp(coeff, 360 * hsv1[0], 360 * hsv2[0]) / 360;
+    float s = Mth.lerp(coeff, hsv1[1], hsv2[1]);
+    float v = Mth.lerp(coeff, hsv1[2], hsv2[2]);
     int packed = Color.HSBtoRGB(h, s, v);
-    float r = ColorHelper.PackedColor.red(packed) / 255.0f;
-    float g = ColorHelper.PackedColor.green(packed) / 255.0f;
-    float b = ColorHelper.PackedColor.blue(packed) / 255.0f;
+    float r = FastColor.ARGB32.red(packed) / 255.0f;
+    float g = FastColor.ARGB32.green(packed) / 255.0f;
+    float b = FastColor.ARGB32.blue(packed) / 255.0f;
     setColor(r, g, b);
-    setAlpha(MathHelper.lerp(coeff, data.a1, data.a2));
+    setAlpha(Mth.lerp(coeff, data.a1, data.a2));
     oRoll = roll;
     roll += data.spin;
-    x = MathHelper.lerp(coeff, data.origin.x, data.destination.x);
-    y = MathHelper.lerp(coeff, data.origin.y, data.destination.y);
-    z = MathHelper.lerp(coeff, data.origin.z, data.destination.z);
+    x = Mth.lerp(coeff, data.origin.x, data.destination.x);
+    y = Mth.lerp(coeff, data.origin.y, data.destination.y);
+    z = Mth.lerp(coeff, data.origin.z, data.destination.z);
   }
 
   @Override
@@ -88,12 +88,12 @@ public class LineParticle extends SpriteTexturedParticle {
   }
 
   @Override
-  public IParticleRenderType getRenderType() {
+  public ParticleRenderType getRenderType() {
     return renderer;
   }
 
   @Override
-  public void render(IVertexBuilder b, ActiveRenderInfo info, float pticks) {
+  public void render(VertexConsumer b, Camera info, float pticks) {
     super.render(ConfigManager.BETTER_LAYERING.get() ? DelayedRender.getDelayedRender().getBuffer(this.type) : b, info, pticks);
   }
 

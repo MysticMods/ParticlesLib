@@ -1,11 +1,11 @@
 package noobanidus.libs.particleslib.client.particle.type;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.ParticleType;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.ParticleType;
 import noobanidus.libs.particleslib.client.particle.base.DirectedParticle;
 import noobanidus.libs.particleslib.client.particle.base.WhirlwindParticle;
 import noobanidus.libs.particleslib.client.particle.data.DirectedParticleData;
@@ -21,15 +21,15 @@ public class WhirlwindParticleType extends ParticleType<WhirlwindParticleData> {
     return WhirlwindParticleData.directedCodecFor(this);
   }
 
-  public static class WhirlwindFactory implements IParticleFactory<WhirlwindParticleData> {
-    protected final IAnimatedSprite sprite;
+  public static class WhirlwindFactory implements ParticleProvider<WhirlwindParticleData> {
+    protected final SpriteSet sprite;
 
-    public WhirlwindFactory(IAnimatedSprite sprite) {
+    public WhirlwindFactory(SpriteSet sprite) {
       this.sprite = sprite;
     }
 
     @Override
-    public Particle createParticle(WhirlwindParticleData data, ClientWorld world, double x, double y, double z, double mx, double my, double mz) {
+    public Particle createParticle(WhirlwindParticleData data, ClientLevel world, double x, double y, double z, double mx, double my, double mz) {
       WhirlwindParticle ret = new WhirlwindParticle(world, data, x, y, z, mx, my, mz);
       ret.pickSprite(sprite);
       return ret;

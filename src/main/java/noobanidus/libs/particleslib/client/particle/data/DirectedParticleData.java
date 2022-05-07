@@ -4,16 +4,16 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.world.phys.Vec3;
 import noobanidus.libs.noobutil.util.Codecs;
 
 import java.util.function.Function;
 
 public class DirectedParticleData extends GenericParticleData {
-  public Vector3d origin = Vector3d.ZERO;
-  public Vector3d destination = Vector3d.ZERO;
+  public Vec3 origin = Vec3.ZERO;
+  public Vec3 destination = Vec3.ZERO;
   public double distance = 0;
 
   public static Codec<DirectedParticleData> directedCodecFor(ParticleType<?> type) {
@@ -49,7 +49,7 @@ public class DirectedParticleData extends GenericParticleData {
     this.collides = data.collides;
   }
 
-  public DirectedParticleData(ParticleType<?> type, GenericParticleData data, Vector3d origin, Vector3d destination, double distance) {
+  public DirectedParticleData(ParticleType<?> type, GenericParticleData data, Vec3 origin, Vec3 destination, double distance) {
     this(type, data);
     this.destination = destination;
     this.distance = distance;
@@ -57,7 +57,7 @@ public class DirectedParticleData extends GenericParticleData {
   }
 
   @Override
-  public void writeToNetwork(PacketBuffer buffer) {
+  public void writeToNetwork(FriendlyByteBuf buffer) {
     super.writeToNetwork(buffer);
     buffer.writeDouble(origin.x).writeDouble(origin.y).writeDouble(origin.z);
     buffer.writeDouble(destination.x).writeDouble(destination.y).writeDouble(destination.z);
@@ -86,17 +86,17 @@ public class DirectedParticleData extends GenericParticleData {
       double z2 = reader.readDouble();
       reader.expect(' ');
       double distance = reader.readDouble();
-      data.origin = new Vector3d(x1, y1, z1);
-      data.destination = new Vector3d(x2, y2, z2);
+      data.origin = new Vec3(x1, y1, z1);
+      data.destination = new Vec3(x2, y2, z2);
       data.distance = distance;
       return data;
     }
 
     @Override
-    public DirectedParticleData fromNetwork(ParticleType<DirectedParticleData> particleType, PacketBuffer buffer) {
+    public DirectedParticleData fromNetwork(ParticleType<DirectedParticleData> particleType, FriendlyByteBuf buffer) {
       DirectedParticleData data = super.fromNetwork(particleType, buffer);
-      data.origin = new Vector3d(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
-      data.destination = new Vector3d(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
+      data.origin = new Vec3(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
+      data.destination = new Vec3(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
       data.distance = buffer.readDouble();
       return data;
     }

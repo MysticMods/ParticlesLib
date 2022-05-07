@@ -1,8 +1,8 @@
 package noobanidus.libs.particleslib.client.render;
 
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import org.lwjgl.opengl.GL11;
 
 /*
@@ -12,8 +12,8 @@ Original source: https://github.com/mekanism/Mekanism/blob/1.16.x/src/main/java/
  */
 
 public class PLibRenderTypes extends RenderType {
-  public static final RenderType MEK_LIGHTNING = create("mek_lightning", DefaultVertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256,
-      false, true, RenderType.State.builder()
+  public static final RenderType MEK_LIGHTNING = create("mek_lightning", DefaultVertexFormat.POSITION_COLOR, GL11.GL_QUADS, 256,
+      false, true, RenderType.CompositeState.builder()
           .setWriteMaskState(COLOR_DEPTH_WRITE)
           .setTransparencyState(LIGHTNING_TRANSPARENCY)
           .setShadeModelState(SMOOTH_SHADE)

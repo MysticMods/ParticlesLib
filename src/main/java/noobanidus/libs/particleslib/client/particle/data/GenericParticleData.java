@@ -4,13 +4,15 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
 
 import java.util.function.Function;
 
-public class GenericParticleData implements IParticleData {
+import net.minecraft.core.particles.ParticleOptions.Deserializer;
+
+public class GenericParticleData implements ParticleOptions {
   public float r1 = 1, g1 = 1, b1 = 1, a1 = 1, r2 = 1, g2 = 1, b2 = 1, a2 = 0;
   public float scale1 = 1, scale2 = 0;
   public int lifetime = 20;
@@ -69,7 +71,7 @@ public class GenericParticleData implements IParticleData {
   }
 
   @Override
-  public void writeToNetwork(PacketBuffer buffer) {
+  public void writeToNetwork(FriendlyByteBuf buffer) {
     buffer.writeFloat(r1).writeFloat(g1).writeFloat(b1).writeFloat(a1);
     buffer.writeFloat(r2).writeFloat(g2).writeFloat(b2).writeFloat(a2);
     buffer.writeFloat(scale1).writeFloat(scale2);
@@ -83,7 +85,7 @@ public class GenericParticleData implements IParticleData {
     return getClass().getSimpleName() + ":internal";
   }
 
-  public static class Deserializer<V extends GenericParticleData> implements IDeserializer<V> {
+  public static class Deserializer<V extends GenericParticleData> implements Deserializer<V> {
     private final Function<ParticleType<?>, V> builder;
 
     public Deserializer(Function<ParticleType<?>, V> builder) {
@@ -142,7 +144,7 @@ public class GenericParticleData implements IParticleData {
     }
 
     @Override
-    public V fromNetwork(ParticleType<V> type, PacketBuffer buf) {
+    public V fromNetwork(ParticleType<V> type, FriendlyByteBuf buf) {
       float r1 = buf.readFloat();
       float g1 = buf.readFloat();
       float b1 = buf.readFloat();

@@ -1,8 +1,8 @@
 package noobanidus.libs.particleslib.client.particle.type;
 
-import net.minecraft.client.particle.IAnimatedSprite;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
 import noobanidus.libs.particleslib.client.particle.LeafDirectedParticle;
 import noobanidus.libs.particleslib.client.particle.LineGlowParticle;
 import noobanidus.libs.particleslib.client.particle.data.DirectedParticleData;
@@ -13,12 +13,12 @@ public class LineGlowParticleType extends DirectedParticleType {
   }
 
   public static class Factory extends DirectedFactory {
-    public Factory(IAnimatedSprite sprite) {
+    public Factory(SpriteSet sprite) {
       super(sprite);
     }
 
     @Override
-    public Particle createParticle(DirectedParticleData data, ClientWorld world, double x, double y, double z, double mx, double my, double mz) {
+    public Particle createParticle(DirectedParticleData data, ClientLevel world, double x, double y, double z, double mx, double my, double mz) {
       LineGlowParticle ret = new LineGlowParticle(world, data, x, y, z, mx, my, mz);
       ret.pickSprite(sprite);
       return ret;

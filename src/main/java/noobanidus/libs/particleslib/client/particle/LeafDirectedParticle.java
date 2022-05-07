@@ -1,6 +1,6 @@
 package noobanidus.libs.particleslib.client.particle;
 
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
 import noobanidus.libs.particleslib.client.particle.base.DirectedParticle;
 import noobanidus.libs.particleslib.client.particle.data.DirectedParticleData;
 import noobanidus.libs.particleslib.client.particle.render.GlowParticleRenderType;
@@ -8,7 +8,7 @@ import noobanidus.libs.particleslib.client.particle.render.SpriteParticleRenderT
 import noobanidus.libs.particleslib.client.util.RenderUtil;
 
 public class LeafDirectedParticle extends DirectedParticle {
-  public LeafDirectedParticle(ClientWorld world, DirectedParticleData data, double x, double y, double z, double vx, double vy, double vz) {
+  public LeafDirectedParticle(ClientLevel world, DirectedParticleData data, double x, double y, double z, double vx, double vy, double vz) {
     super(world, data, x, y, z, vx, vy, vz, data.additive ? GlowParticleRenderType.INSTANCE : SpriteParticleRenderType.INSTANCE, data.additive ? RenderUtil.GLOWING_PARTICLE : RenderUtil.DELAYED_PARTICLE);
     this.hasPhysics = false;
   }

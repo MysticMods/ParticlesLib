@@ -1,9 +1,9 @@
 package noobanidus.libs.particleslib.client.particle;
 
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import noobanidus.libs.particleslib.client.particle.data.DirectedParticleData;
 import noobanidus.libs.particleslib.client.particle.data.GenericParticleData;
 import noobanidus.libs.particleslib.client.particle.data.WhirlwindParticleData;
@@ -20,7 +20,7 @@ public class Particles {
 
     public ParticleType<?> type;
     public GenericParticleData data;
-    public Vector3d destination = Vector3d.ZERO;
+    public Vec3 destination = Vec3.ZERO;
     public double distance = 0;
     public double vx = 0, vy = 0, vz = 0;
     public double dx = 0, dy = 0, dz = 0;
@@ -122,14 +122,14 @@ public class Particles {
       return this;
     }
 
-    public ParticleBuilder setDestination(Vector3d destination) {
+    public ParticleBuilder setDestination(Vec3 destination) {
       directed = true;
       cache = null;
       this.destination = destination;
       return this;
     }
 
-    public ParticleBuilder setCenter (Vector3d center) {
+    public ParticleBuilder setCenter (Vec3 center) {
       whirlwind = true;
       cache2 = null;
       this.destination = center;
@@ -222,12 +222,12 @@ public class Particles {
     private WhirlwindParticleData cache2 = null;
 
 
-    public ParticleBuilder spawn(World world, double x, double y, double z) {
+    public ParticleBuilder spawn(Level world, double x, double y, double z) {
       // TODO: Calculate motion, etc, base off of potential destination
-      return spawn(world, new Vector3d(x, y, z));
+      return spawn(world, new Vec3(x, y, z));
     }
 
-    public ParticleBuilder spawn(World world, Vector3d pos) {
+    public ParticleBuilder spawn(Level world, Vec3 pos) {
       double yaw = random.nextFloat() * Math.PI * 2, pitch = random.nextFloat() * Math.PI - Math.PI / 2;
       double xSpeed = random.nextFloat() * maxXSpeed, ySpeed = random.nextFloat() * maxYSpeed, zSpeed = random.nextFloat() * maxZSpeed;
       this.vx += Math.sin(yaw) * Math.cos(pitch) * xSpeed;
@@ -239,23 +239,23 @@ public class Particles {
       this.dy = Math.sin(pitch2) * yDist;
       this.dz = Math.cos(yaw2) * Math.cos(pitch2) * zDist;
 
-      if (this.directed && destination != Vector3d.ZERO) {
+      if (this.directed && destination != Vec3.ZERO) {
         if (cache == null) {
           cache = new DirectedParticleData(data.getType(), data, pos, this.destination, this.distance);
         }
 
         if (leaf) {
           // TODO: Scale based on distance/lifetime with speed instead of forced speed?
-          Vector3d origAngle = pos.subtract(destination);
+          Vec3 origAngle = pos.subtract(destination);
           cache.lifetime = (int) ((origAngle.lengthSqr() * 10) - 5);
 
-          Vector3d angle = destination.subtract(pos).normalize().scale(0.05);
+          Vec3 angle = destination.subtract(pos).normalize().scale(0.05);
 
           world.addParticle(cache, pos.x + dx, pos.y + dy, pos.z + dz, angle.x, angle.y, angle.z);
         } else {
           world.addParticle(cache, pos.x + dx, pos.y + dy, pos.z + dz, vx, vy, vz);
         }
-      } else if (this.whirlwind && destination != Vector3d.ZERO) {
+      } else if (this.whirlwind && destination != Vec3.ZERO) {
         if (cache2 == null) {
           cache2 = new WhirlwindParticleData(data.getType(), data, this.destination, this.inverse, this.distance);
         }
@@ -267,11 +267,11 @@ public class Particles {
       return this;
     }
 
-    public ParticleBuilder repeat(World world, double x, double y, double z, int n) {
-      return repeat(world, new Vector3d(x, y, z), n);
+    public ParticleBuilder repeat(Level world, double x, double y, double z, int n) {
+      return repeat(world, new Vec3(x, y, z), n);
     }
 
-    public ParticleBuilder repeat (World world, Vector3d pos, int n) {
+    public ParticleBuilder repeat (Level world, Vec3 pos, int n) {
       for (int i = 0; i < n; i++) {
         spawn(world, pos);
       }

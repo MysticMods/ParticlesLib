@@ -1,7 +1,7 @@
 package noobanidus.libs.particleslib.init;
 
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import net.minecraft.particles.ParticleType;
+import net.minecraft.core.particles.ParticleType;
 import noobanidus.libs.particleslib.client.particle.LeafDirectedParticle;
 import noobanidus.libs.particleslib.client.particle.LineGlowParticle;
 import noobanidus.libs.particleslib.client.particle.PetalParticle;
