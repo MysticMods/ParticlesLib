@@ -30,6 +30,7 @@ public class ModParticles {
   public static RegistryEntry<MoteParticleType> MOTE_PARTICLE = REGISTRATE.simple("mote_particle", ParticleType.class, MoteParticleType::new);
   public static RegistryEntry<RadialParticleType> RADIAL_PARTICLE = REGISTRATE.simple("radial_particle", ParticleType.class, RadialParticleType::new);
   public static RegistryEntry<SoftRadialParticleType> SOFT_RADIAL_PARTICLE = REGISTRATE.simple("soft_radial_particle", ParticleType.class, SoftRadialParticleType::new);
+  public static RegistryEntry<FeyLightParticleType> FEY_LIGHT_PARTICLE = REGISTRATE.simple("fey_light_particle", ParticleType.class, FeyLightParticleType::new);
 
   public static void load () {
 

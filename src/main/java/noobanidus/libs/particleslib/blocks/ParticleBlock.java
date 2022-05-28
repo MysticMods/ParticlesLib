@@ -1,10 +1,8 @@
 package noobanidus.libs.particleslib.blocks;
 
-import com.mojang.math.Vector3d;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -26,7 +24,7 @@ public class ParticleBlock extends Block {
   @OnlyIn(Dist.CLIENT)
   @Override
   public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
-/*    Vec3 center = new Vec3(pos.getX() + 0.5, pos.getY() + 3.5, pos.getZ() + 0.5);
+    Vec3 center = new Vec3(pos.getX() + 0.5, pos.getY() + 3.5, pos.getZ() + 0.5);
     float posX = pos.getX() + 0.5f;
     float posY = pos.getY();
     float posZ = pos.getZ() + 0.5f;
@@ -34,47 +32,48 @@ public class ParticleBlock extends Block {
     float ty = posY;
 
     for (float i = 0; i < 360; i += random.nextFloat() * 90.0f) {
-      float tx = posX + 1.25f* (float) Math.sin(Math.toRadians(i)) ;
-      float tz = posZ + 1.25f* (float) Math.cos(Math.toRadians(i)) ;
+      float tx = posX + 1.5f * (float) Math.sin(Math.toRadians(i));
+      float tz = posZ + 1.5f * (float) Math.cos(Math.toRadians(i));
       Particles.create(ModParticles.SMOKE_PARTICLE)
-          .setAlpha(0.4f, 0.15f)
+          .setAlpha(0.7f, 0.15f)
           .setColor(70 / 255.0f, 70 / 255.0f, 70 / 255.0f)
           .setScale(1.2f, 0.7f)
           .disableAdditive()
           .disableGravity()
           .setLifetime(60)
-          .setSpin(0.05f)
+          .setSpin(0.01f * (random.nextFloat() - 0.5f))
           .spawn(level, new Vec3(tx, ty, tz));
     }
     for (float i = 0; i < 360; i += random.nextFloat() * 90.0f) {
-      float tx = (float) posX + 1.75f * (float) Math.sin(Math.toRadians(i));
-      float tz = (float) posZ + 1.75f * (float) Math.cos(Math.toRadians(i));
+      float tx = (float) posX + 2.25f * (float) Math.sin(Math.toRadians(i));
+      float tz = (float) posZ + 2.25f * (float) Math.cos(Math.toRadians(i));
       Particles.create(ModParticles.SMOKE_PARTICLE)
-          .setAlpha(0.4f, 0.15f)
+          .setAlpha(0.7f, 0.15f)
           .setColor(70 / 255.0f, 70 / 255.0f, 70 / 255.0f)
           .setScale(0.9f, 0.6f)
           .disableAdditive()
           .disableGravity()
           .setLifetime(60)
-          .setSpin(0.0f)
+          .setSpin(0.01f * (random.nextFloat() - 0.5f))
           .spawn(level, new Vec3(tx, ty, tz));
     }
     for (float i = 0; i < 360; i += random.nextFloat() * 90.0f) {
-      float vx = 0.09f * (float) Math.sin(Math.toRadians(i));
-      float vz = 0.09f * (float) Math.cos(Math.toRadians(i));
-      float tx = (float) posX + 1.5f * (float) Math.sin(Math.toRadians(i));
-      float tz = (float) posZ + 1.5f * (float) Math.cos(Math.toRadians(i));
+      double deg = Math.toRadians(i);
+      float vx = 0.09f * (float) Math.sin(deg + random.nextFloat());
+      float vz = 0.09f * (float) Math.cos(deg + random.nextFloat());
+      float tx = (float) posX + 2f * (float) Math.sin(deg);
+      float tz = (float) posZ + 2f * (float) Math.cos(deg);
       Particles.create(ModParticles.SMOKE_PARTICLE)
-          .setAlpha(0.3f, 0.15f)
+          .setAlpha(0.6f, 0.15f)
           .setVelocity(-vx, 0, -vz)
           .setColor(70 / 255.0f, 70 / 255.0f, 70 / 255.0f)
           .setScale(1.2f, 0.6f)
           .disableAdditive()
-          .disableGravity(          )
+          .disableGravity()
           .setLifetime(60)
-          .setSpin(0.05f)
+          .setSpin(0.01f * (random.nextFloat() - 0.5f))
           .spawn(level, new Vec3(tx, ty, tz));
-    }*/
+    }
 
 /*    for (int s = 0; s < 12; s++) {
       double r = stages[s];
@@ -117,15 +116,17 @@ public class ParticleBlock extends Block {
             .enableDestinationVelocity()
             .spawn(level, dest);
       }
-    });
+    });*/
 
-    Particles.create(ModParticles.SOFT_RADIAL_PARTICLE)
+    Particles.create(ModParticles.FEY_LIGHT_PARTICLE)
         .addVelocity(0, 0, 0)
-        .setAlpha(0.8f, 0.3f)
+        .setAlpha(0.8f)
         .setScale(0.2f)
         .setColor(0.875f, 0.3f, 0.56f, 0.375f, 0.5f, 0.95f)
-        .setLifetime(10)
+        .setLifetime(90)
+        .disableAdditive()
         .disableGravity()
+        .setSpin(0.01f * (random.nextFloat() - 0.5f))
         .spawn(level, pos.getX() + 0.5, pos.getY() + 3.5, pos.getZ() + 0.5);
   }
 }

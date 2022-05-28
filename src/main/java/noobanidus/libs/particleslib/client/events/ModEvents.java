@@ -36,6 +36,7 @@ public class ModEvents {
     manager.register(ModParticles.MOTE_PARTICLE.get(), MoteParticleType.Factory::new);
     manager.register(ModParticles.RADIAL_PARTICLE.get(), RadialParticleType.Factory::new);
     manager.register(ModParticles.SOFT_RADIAL_PARTICLE.get(), SoftRadialParticleType.Factory::new);
+    manager.register(ModParticles.FEY_LIGHT_PARTICLE.get(), FeyLightParticleType.Factory::new);
   }
 }
 
