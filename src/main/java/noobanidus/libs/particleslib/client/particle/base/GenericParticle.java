@@ -49,7 +49,9 @@ public class GenericParticle extends TextureSheetParticle {
 
   protected void updateTraits() {
     float coeff = getCoeff();
-    quadSize = Mth.lerp(coeff, data.scale1, data.scale2);
+    float pScale = Mth.lerp(coeff, data.scale1, data.scale2);
+    quadSize = pScale;
+    this.setSize(0.2F * pScale, 0.2F * pScale);
     float h = Mth.rotLerp(coeff, 360 * hsv1[0], 360 * hsv2[0]) / 360;
     float s = Mth.lerp(coeff, hsv1[1], hsv2[1]);
     float v = Mth.lerp(coeff, hsv1[2], hsv2[2]);
