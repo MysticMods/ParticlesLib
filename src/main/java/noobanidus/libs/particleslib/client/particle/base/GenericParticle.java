@@ -1,11 +1,11 @@
 package noobanidus.libs.particleslib.client.particle.base;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Camera;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;
-import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import noobanidus.libs.particleslib.client.particle.data.GenericParticleData;
@@ -40,7 +40,12 @@ public class GenericParticle extends TextureSheetParticle {
     this.gravity = data.gravity ? 1 : 0;
     Color.RGBtoHSB((int) (255 * Math.min(1.0f, data.r1)), (int) (255 * Math.min(1.0f, data.g1)), (int) (255 * Math.min(1.0f, data.b1)), hsv1);
     Color.RGBtoHSB((int) (255 * Math.min(1.0f, data.r2)), (int) (255 * Math.min(1.0f, data.g2)), (int) (255 * Math.min(1.0f, data.b2)), hsv2);
-    this.roll = (float)Math.random() * ((float)Math.PI * 2F);
+    if (data.spin > 0f) {
+      this.roll = (float) Math.random() * ((float) Math.PI * 2F);
+    } else {
+      this.roll = 0f;
+    }
+
     updateTraits();
   }
 
@@ -63,8 +68,12 @@ public class GenericParticle extends TextureSheetParticle {
     setColor(r, g, b);
     setAlpha(Mth.lerp(coeff, data.a1, data.a2));
     // TODO: Init roll
-    this.oRoll = this.roll;
-    this.roll += (float)Math.PI * data.spin * 2.0F;
+    if (data.spin != 0f) {
+      this.oRoll = this.roll;
+      this.roll += (float) Math.PI * data.spin * 2.0F;
+    } else {
+      this.roll = 0f;
+    }
   }
 
   @Override
