@@ -47,6 +47,7 @@ public class WhirlwindParticleData extends GenericParticleData {
     this.gravity = data.gravity;
     this.additive = data.additive;
     this.collides = data.collides;
+    this.physics = data.physics;
   }
 
   public WhirlwindParticleData(ParticleType<?> type, GenericParticleData data, Vec3 center, boolean inverse, double radius) {

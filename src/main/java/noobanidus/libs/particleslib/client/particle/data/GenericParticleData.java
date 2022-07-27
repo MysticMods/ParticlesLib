@@ -18,6 +18,7 @@ public class GenericParticleData implements ParticleOptions {
   public boolean gravity = true;
   public boolean additive = true;
   public boolean collides = true;
+  public boolean physics = true;
 
   public static Codec<GenericParticleData> codecFor(ParticleType<?> type) {
     return RecordCodecBuilder.create(instance -> instance.group(
@@ -35,8 +36,9 @@ public class GenericParticleData implements ParticleOptions {
         Codec.FLOAT.fieldOf("spin").forGetter(d -> d.spin),
         Codec.BOOL.fieldOf("gravity").forGetter(d -> d.gravity),
         Codec.BOOL.fieldOf("additive").forGetter(d -> d.additive),
-        Codec.BOOL.fieldOf("collides").forGetter(d -> d.collides)
-    ).apply(instance, (r1, g1, b1, a1, r2, g2, b2, a2, scale1, scale2, lifetime, spin, gravity, additive, collides) -> {
+        Codec.BOOL.fieldOf("collides").forGetter(d -> d.collides),
+        Codec.BOOL.fieldOf("physics").forGetter(d -> d.physics)
+    ).apply(instance, (r1, g1, b1, a1, r2, g2, b2, a2, scale1, scale2, lifetime, spin, gravity, additive, collides, physics) -> {
       GenericParticleData data = new GenericParticleData(type);
       data.r1 = r1;
       data.g1 = g1;
@@ -53,6 +55,7 @@ public class GenericParticleData implements ParticleOptions {
       data.gravity = gravity;
       data.additive = additive;
       data.collides = collides;
+      data.physics = physics;
       return data;
     }));
   }
@@ -75,7 +78,7 @@ public class GenericParticleData implements ParticleOptions {
     buffer.writeFloat(scale1).writeFloat(scale2);
     buffer.writeInt(lifetime);
     buffer.writeFloat(spin);
-    buffer.writeBoolean(gravity).writeBoolean(additive).writeBoolean(collides);
+    buffer.writeBoolean(gravity).writeBoolean(additive).writeBoolean(collides).writeBoolean(physics);
   }
 
   @Override
@@ -122,6 +125,8 @@ public class GenericParticleData implements ParticleOptions {
       boolean additive = reader.readBoolean();
       reader.expect(' ');
       boolean collides = reader.readBoolean();
+      reader.expect(' ');
+      boolean physics = reader.readBoolean();
       V data = builder.apply(type);
       data.r1 = r1;
       data.g1 = g1;
@@ -138,6 +143,7 @@ public class GenericParticleData implements ParticleOptions {
       data.gravity = gravity;
       data.additive = additive;
       data.collides = collides;
+      data.physics = physics;
       return data;
     }
 
@@ -158,6 +164,7 @@ public class GenericParticleData implements ParticleOptions {
       boolean gravity = buf.readBoolean();
       boolean additive = buf.readBoolean();
       boolean collides = buf.readBoolean();
+      boolean physics = buf.readBoolean();
       V data = builder.apply(type);
       data.r1 = r1;
       data.g1 = g1;
@@ -174,6 +181,7 @@ public class GenericParticleData implements ParticleOptions {
       data.gravity = gravity;
       data.additive = additive;
       data.collides = collides;
+      data.physics = physics;
       return data;
     }
   }

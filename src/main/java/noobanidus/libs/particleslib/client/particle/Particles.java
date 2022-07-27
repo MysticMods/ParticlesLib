@@ -102,6 +102,16 @@ public class Particles {
       return this;
     }
 
+    public ParticleBuilder disablePhysics () {
+      data.physics = false;
+      return this;
+    }
+
+    public ParticleBuilder enablePhysics () {
+      data.physics = true;
+      return this;
+    }
+
     public ParticleBuilder enableAdditive() {
       data.additive = true;
       return this;

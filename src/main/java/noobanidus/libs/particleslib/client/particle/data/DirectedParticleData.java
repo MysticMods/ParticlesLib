@@ -47,6 +47,7 @@ public class DirectedParticleData extends GenericParticleData {
     this.gravity = data.gravity;
     this.additive = data.additive;
     this.collides = data.collides;
+    this.physics = data.physics;
   }
 
   public DirectedParticleData(ParticleType<?> type, GenericParticleData data, Vec3 origin, Vec3 destination, double distance) {
