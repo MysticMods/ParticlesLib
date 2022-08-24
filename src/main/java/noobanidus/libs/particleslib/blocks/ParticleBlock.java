@@ -1,6 +1,7 @@
 package noobanidus.libs.particleslib.blocks;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -10,8 +11,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import noobanidus.libs.particleslib.client.particle.Particles;
 import noobanidus.libs.particleslib.init.ModParticles;
-
-import java.util.Random;
 
 public class ParticleBlock extends Block {
   public ParticleBlock(Properties p_i48440_1_) {
@@ -23,7 +22,7 @@ public class ParticleBlock extends Block {
 
   @OnlyIn(Dist.CLIENT)
   @Override
-  public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+  public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
     Vec3 center = new Vec3(pos.getX() + 0.5, pos.getY() + 3.5, pos.getZ() + 0.5);
     float posX = pos.getX() + 0.5f;
     float posY = pos.getY();

@@ -3,18 +3,17 @@ package noobanidus.libs.particleslib.client.events;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import noobanidus.libs.particleslib.ParticlesLib;
-import noobanidus.libs.particleslib.client.particle.LineGlowParticle;
 import noobanidus.libs.particleslib.client.particle.type.*;
 import noobanidus.libs.particleslib.init.ModParticles;
 
 @Mod.EventBusSubscriber(modid = ParticlesLib.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModEvents {
   @SubscribeEvent
-  public static void registerFactories(ParticleFactoryRegisterEvent evt) {
+  public static void registerFactories(RegisterParticleProvidersEvent evt) {
     ParticleEngine manager = Minecraft.getInstance().particleEngine;
     manager.register(ModParticles.CLOUD_PARTICLE.get(), CloudParticleType.Factory::new);
     manager.register(ModParticles.FIRE_PARTICLE.get(), FireParticleType.Factory::new);
